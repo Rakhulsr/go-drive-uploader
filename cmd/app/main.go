@@ -20,47 +20,47 @@ func main() {
 	var choice int
 	fmt.Println("1. Upload File")
 	fmt.Println("2. Create Folder")
-	fmt.Print("Pilih opsi: ")
+	fmt.Print("Select Option: ")
 	fmt.Scan(&choice)
 
 	switch choice {
 	case 1:
 		var filePath, folderID string
 
-		fmt.Print("Masukkan path file: ")
+		fmt.Print("Inpu file path: ")
 		fmt.Scan(&filePath)
 
-		fmt.Print("Masukkan folder ID (kosong untuk folder utama, '-' untuk root): ")
+		fmt.Print("Input folder ID (empty or - for main folder(root)): ")
 		fmt.Scan(&folderID)
 
 		if err := srv.UploadFile(filePath, folderID); err != nil {
-			fmt.Printf("Error uploading file: %v\n", err)
+			fmt.Printf("Failed  uploading file, error: %v\n", err)
 		} else {
-			fmt.Println("File berhasil diunggah.")
+			fmt.Println("File Uploaded")
 		}
 	case 2:
 		var folderName, parentID string
-		fmt.Print("Masukkan nama folder: ")
+		fmt.Print("Input Folder Name: ")
 		fmt.Scan(&folderName)
 
-		fmt.Print("Masukkan parent folder ID (kosong untuk folder utama): ")
+		fmt.Print("Input Folder ParentID (empty or - for main folder(root)): ")
 		fmt.Scan(&parentID)
 
 		if parentID == "-" {
-			fmt.Println("Membuat folder di direktori utama...")
+			fmt.Println("Creating folder in Main directory...")
 		} else if parentID != "" {
-			fmt.Printf("Membuat folder di direktori: %s\n", parentID)
+			fmt.Printf("Creating folder in: %s ...\n", parentID)
 		} else {
-			fmt.Println("Membuat folder di direktori utama...")
+			fmt.Println("Creating folder in Main directory...")
 		}
 
 		folderID, err := srv.CreateFolder(folderName, parentID)
 		if err != nil {
 			fmt.Printf("Error creating folder: %v\n", err)
 		} else {
-			fmt.Printf("Folder '%s' berhasil dibuat dengan ID '%s'\n", folderName, folderID)
+			fmt.Printf("Folder '%s' created within ID '%s'\n", folderName, folderID)
 		}
 	default:
-		fmt.Println("Pilihan tidak valid")
+		fmt.Println("Option is not valid")
 	}
 }
